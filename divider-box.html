@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CNC Box — Caixa Divisória em Grade (Plano &amp; Dedo)</title>
+  <link rel="icon" type="image/svg+xml" href="assets/logo.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <!-- Top Navigation Bar -->
+  <header class="top-nav">
+    <div class="nav-left">
+      <a href="index.html" class="brand-logo" title="Voltar para a página inicial">
+        <span class="brand-mark" aria-hidden="true">
+          <img src="assets/logo.svg" alt="" width="28" height="28">
+        </span>
+        <span class="brand-wordmark">CNC <span class="brand-accent">Box</span></span>
+      </a>
+      <a href="index.html" class="nav-crumb">← Modelos</a>
+      <span class="brand-badge">Caixa Divisória · Plano &amp; Dedo</span>
+    </div>
+
+    <nav class="nav-right" aria-label="Ações rápidas">
+      <a href="basic-box.html" class="nav-btn nav-link" title="Ir para Caixa Básica">Básica</a>
+      <a href="lid-box.html" class="nav-btn nav-link" title="Ir para Tampa de Caixa">Tampa</a>
+      <a href="polygon-box.html" class="nav-btn nav-link" title="Ir para Caixa Poligonal">Poligonal</a>
+      <a href="stackable-bin.html" class="nav-btn nav-link" title="Ir para Caixa Empilhável">Empilhável</a>
+      <a href="kerf-box.html" class="nav-btn nav-link" title="Ir para Caixa Curvada">Curvada</a>
+      <button type="button" class="nav-btn" id="btn-explode" title="Alternar vista explodida 3D">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <polyline points="15 3 21 3 21 9"></polyline>
+          <polyline points="9 21 3 21 3 15"></polyline>
+          <line x1="21" y1="3" x2="14" y2="10"></line>
+          <line x1="3" y1="21" x2="10" y2="14"></line>
+        </svg>
+        <span>Explodir</span>
+      </button>
+      <button type="button" class="nav-btn" id="btn-reset-view" title="Centralizar câmera 3D">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"></path>
+          <path d="M3 3v5h5"></path>
+        </svg>
+        <span>Centralizar</span>
+      </button>
+      <div class="nav-divider" aria-hidden="true"></div>
+      <button type="button" class="nav-btn nav-btn-outline" id="btn-help">AJUDA</button>
+    </nav>
+  </header>
+
+  <!-- Main Workspace -->
+  <main class="workspace">
+    <!-- Full-bleed 3D WebGL Canvas -->
+    <div class="viewport-container" id="viewport-container">
+      <canvas id="box-canvas" aria-label="Pré-visualização 3D interativa da caixa divisória"></canvas>
+      <div class="webgl-fallback" id="webgl-fallback" hidden>
+        <p>WebGL não está disponível neste navegador. Os planos 2D em SVG e DXF continuam totalmente funcionais.</p>
+      </div>
+    </div>
+
+    <!-- Floating Left Control Sidebar -->
+    <aside class="control-panel" id="divider-box-ui" data-testid="divider-box-ui" aria-label="Configurações da Caixa Divisória em Grade">
+      <div class="panel-header">
+        <h1>Caixa Divisória em Grade</h1>
+        <button type="button" class="panel-collapse-btn" id="btn-toggle-panel" aria-expanded="true" title="Recolher/Expandir painel">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="18 15 12 9 6 15"></polyline>
+          </svg>
+        </button>
+      </div>
+
+      <div class="panel-body" id="panel-body">
+        <!-- Units Toggle -->
+        <div class="control-group">
+          <div class="segmented-control" role="group" aria-label="Unidades">
+            <button type="button" class="segment-btn" data-unit="in">IN</button>
+            <button type="button" class="segment-btn active" data-unit="mm">MM</button>
+          </div>
+        </div>
+
+        <!-- Dimensions & Grid Section -->
+        <section class="control-section">
+          <h2 class="section-label">Dimensões</h2>
+
+          <label class="field-row" for="input-width">
+            <span class="field-name">Largura</span>
+            <span class="field-input-wrap">
+              <input type="number" id="input-width" name="width" value="150.00" step="1" min="10" max="5000" inputmode="decimal">
+              <span class="unit-suffix" data-unit-label>mm</span>
+            </span>
+          </label>
+
+          <label class="field-row" for="input-height">
+            <span class="field-name">Altura</span>
+            <span class="field-input-wrap">
+              <input type="number" id="input-height" name="height" value="50.00" step="1" min="10" max="5000" inputmode="decimal">
+              <span class="unit-suffix" data-unit-label>mm</span>
+            </span>
+          </label>
+
+          <label class="field-row" for="input-depth">
+            <span class="field-name">Profundidade</span>
+            <span class="field-input-wrap">
+              <input type="number" id="input-depth" name="depth" value="100.00" step="1" min="10" max="5000" inputmode="decimal">
+              <span class="unit-suffix" data-unit-label>mm</span>
+            </span>
+          </label>
+
+          <!-- Thickness Preset Dropdown / Custom Input -->
+          <div class="field-row thickness-row">
+            <span class="field-name">Espessura</span>
+            <div class="thickness-control" id="thickness-dropdown-wrap">
+              <details class="custom-select" id="thickness-details">
+                <summary class="custom-select-trigger">
+                  <span id="thickness-display">3.00 mm</span>
+                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <polyline points="6 9 12 15 18 9"></polyline>
+                  </svg>
+                </summary>
+                <div class="custom-select-menu" id="thickness-menu" role="listbox"></div>
+              </details>
+            </div>
+            <div class="field-input-wrap thickness-custom-wrap" id="thickness-custom-wrap" hidden>
+              <input type="number" id="input-thickness" name="thickness" value="3.00" step="0.1" min="0.5" max="100" inputmode="decimal">
+              <span class="unit-suffix" data-unit-label>mm</span>
+              <button type="button" class="icon-mini-btn" id="btn-thickness-presets" title="Voltar para predefinições" aria-label="Voltar para predefinições">▾</button>
+            </div>
+          </div>
+
+          <!-- Grid Rows & Columns -->
+          <label class="field-row" for="input-rows">
+            <span class="field-name">Linhas</span>
+            <span class="field-input-wrap">
+              <input type="number" id="input-rows" name="rowCount" value="3" step="1" min="1" max="12" inputmode="numeric">
+            </span>
+          </label>
+
+          <label class="field-row" for="input-cols">
+            <span class="field-name">Colunas</span>
+            <span class="field-input-wrap">
+              <input type="number" id="input-cols" name="colCount" value="3" step="1" min="1" max="12" inputmode="numeric">
+            </span>
+          </label>
+
+          <!-- Resize Dividers Button -->
+          <button type="button" class="secondary-action-btn" id="btn-resize-dividers" data-testid="btn-resize-dividers">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+              <rect x="3" y="3" width="18" height="18" rx="2"></rect>
+              <line x1="3" y1="12" x2="21" y2="12"></line>
+              <line x1="12" y1="3" x2="12" y2="21"></line>
+            </svg>
+            <span>REDIMENSIONAR DIVISÓRIAS</span>
+          </button>
+
+          <p class="validation-msg" id="validation-msg" role="alert" hidden></p>
+        </section>
+
+        <!-- Dimension Reference (Interna / Externa / Célula) -->
+        <section class="control-section">
+          <h2 class="section-label">Dimensões internas, externas ou da célula?</h2>
+          <div class="segmented-control" role="group" aria-label="Referência das dimensões">
+            <button type="button" class="segment-btn" data-dim-ref="inside">INTERNA</button>
+            <button type="button" class="segment-btn active" data-dim-ref="outside">EXTERNA</button>
+            <button type="button" class="segment-btn" data-dim-ref="cell">CÉLULA</button>
+          </div>
+        </section>
+
+        <!-- Lid Type Dropdown -->
+        <section class="control-section">
+          <h2 class="section-label">Tipo de Tampa</h2>
+          <div class="field-row lid-row">
+            <span class="field-name">Tampa</span>
+            <div class="thickness-control">
+              <details class="custom-select" id="lid-details">
+                <summary class="custom-select-trigger">
+                  <span id="lid-display">Nenhuma</span>
+                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <polyline points="6 9 12 15 18 9"></polyline>
+                  </svg>
+                </summary>
+                <div class="custom-select-menu" id="lid-menu" role="listbox">
+                  <button type="button" class="thickness-option selected" data-lid="none" role="option">Nenhuma (Aberta)</button>
+                  <button type="button" class="thickness-option" data-lid="flat" role="option">Plana (Fechada)</button>
+                </div>
+              </details>
+            </div>
+          </div>
+        </section>
+
+        <!-- Edge Joints (ONLY FLAT & FINGER — NO T-SLOT) -->
+        <section class="control-section">
+          <h2 class="section-label">Juntas de borda</h2>
+          <div class="segmented-control" role="group" aria-label="Tipo de junta de borda">
+            <button type="button" class="segment-btn" data-joint="flat">PLANO</button>
+            <button type="button" class="segment-btn active" data-joint="finger">DEDO</button>
+          </div>
+        </section>
+
+        <!-- Finger Size Slider (Visible only in FINGER mode) -->
+        <section class="control-section" id="finger-size-section">
+          <div class="section-label-row">
+            <h2 class="section-label">Tamanho do Dedo</h2>
+            <span class="finger-count-hint" id="finger-count-hint"></span>
+          </div>
+          <div class="finger-slider-wrap">
+            <button type="button" class="slider-bound-btn" id="finger-min-btn" title="Definir tamanho mínimo">6.0</button>
+            <div class="slider-track-area" id="finger-slider-track">
+              <input type="range" id="input-finger-size" min="6" max="23.5" step="0.1" value="9.0" aria-label="Tamanho do Dedo">
+              <div class="slider-rail" aria-hidden="true">
+                <div class="slider-fill" id="finger-slider-fill"></div>
+              </div>
+              <div class="slider-thumb-pill" id="finger-thumb-pill" aria-hidden="true">9.00</div>
+            </div>
+            <button type="button" class="slider-bound-btn" id="finger-max-btn" title="Definir tamanho máximo">23.5</button>
+          </div>
+        </section>
+
+        <!-- Primary Action Button -->
+        <button type="button" class="primary-btn" id="btn-open-download" data-testid="download-2d-component">
+          BAIXAR
+        </button>
+      </div>
+    </aside>
+
+    <!-- Bottom-Right Live Info HUD -->
+    <div class="viewport-hud" aria-live="polite">
+      <div class="hud-stats" id="hud-stats">
+        <span><strong>Externo:</strong> <em id="hud-outer">150 × 50 × 100 mm</em></span>
+        <span class="hud-sep">·</span>
+        <span><strong>Grade:</strong> <em id="hud-grid">3×3 (9 cél.)</em></span>
+        <span class="hud-sep">·</span>
+        <span><strong>Peças:</strong> <em id="hud-panels">9 (Dedo)</em></span>
+      </div>
+      <div class="hud-hint">Arraste para girar · Scroll para zoom</div>
+    </div>
+  </main>
+
+  <!-- Resize Dividers Modal (Unequal Rows & Columns) -->
+  <div class="modal-backdrop" id="resize-modal" role="dialog" aria-modal="true" aria-labelledby="resize-modal-title" hidden>
+    <div class="modal-dialog modal-dialog-resize">
+      <div class="modal-header">
+        <h2 id="resize-modal-title">Redimensionar divisórias</h2>
+        <button type="button" class="modal-close-btn" id="btn-close-resize" aria-label="Fechar">✕</button>
+      </div>
+
+      <div class="resize-body">
+        <p class="resize-desc">Defina o tamanho interno de cada coluna e linha. A caixa aumenta ou diminui automaticamente para caber, mantendo o tamanho dos compartimentos que você não alterar.</p>
+
+        <div class="resize-grid-shell" id="resize-grid-shell">
+          <!-- Dynamically populated 2D grid schematic with column & row inputs -->
+        </div>
+
+        <div class="resize-summary" id="resize-summary">
+          <span><strong>Antigo (Externo):</strong> <em id="resize-old-dim">150.0 × 100.0 mm</em></span>
+          <span class="resize-arrow">→</span>
+          <span><strong>Novo (Externo):</strong> <em id="resize-new-dim">150.0 × 100.0 mm</em></span>
+        </div>
+      </div>
+
+      <div class="resize-footer">
+        <button type="button" class="nav-btn nav-btn-outline" id="btn-equalize-cells">Igualar todas</button>
+        <div class="resize-footer-right">
+          <button type="button" class="nav-btn nav-btn-outline" id="btn-cancel-resize">Cancelar</button>
+          <button type="button" class="primary-btn resize-apply-btn" id="btn-apply-resize">Aplicar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Export / Download Modal -->
+  <div class="modal-backdrop" id="download-modal" role="dialog" aria-modal="true" aria-labelledby="download-modal-title" hidden>
+    <div class="modal-dialog">
+      <div class="modal-header">
+        <h2 id="download-modal-title">Baixar</h2>
+        <button type="button" class="modal-close-btn" id="btn-close-download" aria-label="Fechar">✕</button>
+      </div>
+
+      <!-- Live 2D SVG Preview Viewport -->
+      <div class="svg-preview-box" id="svg-preview-box">
+        <div class="svg-preview-inner" id="svg-preview-container"></div>
+        <div class="svg-preview-meta" id="svg-preview-meta"></div>
+      </div>
+
+      <!-- Configuration Tabs -->
+      <div class="modal-tabs-container">
+        <div class="modal-tablist" role="tablist" aria-label="Configurações de exportação">
+          <button type="button" class="tab-btn active" role="tab" aria-selected="true" data-tab="labels">Rótulos</button>
+          <button type="button" class="tab-btn" role="tab" aria-selected="false" data-tab="lines">Formatação de Linha</button>
+          <button type="button" class="tab-btn" role="tab" aria-selected="false" data-tab="kerf">Compensação de Corte</button>
+          <button type="button" class="tab-btn" role="tab" aria-selected="false" data-tab="layout">Layout</button>
+        </div>
+
+        <div class="modal-tab-panels">
+          <!-- Tab 1: Rótulos -->
+          <div class="tab-panel active" role="tabpanel" data-tab-panel="labels">
+            <div class="tab-grid">
+              <div class="tab-field">
+                <span class="tab-label">Rótulos</span>
+                <div class="segmented-control" role="group" aria-label="Rótulos nos painéis">
+                  <button type="button" class="segment-btn active" data-labels="enabled">HABILITADO</button>
+                  <button type="button" class="segment-btn" data-labels="disabled">DESABILITADO</button>
+                </div>
+              </div>
+              <div class="tab-field" id="label-color-field">
+                <label class="tab-label" for="input-label-color">Cor do Rótulo</label>
+                <div class="color-input-box">
+                  <input type="text" id="input-label-color" value="#000000" maxlength="7" spellcheck="false">
+                  <input type="color" id="picker-label-color" value="#000000" aria-label="Selecionar cor do rótulo">
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Tab 2: Formatação de Linha -->
+          <div class="tab-panel" role="tabpanel" data-tab-panel="lines" hidden>
+            <div class="tab-grid tab-grid-3">
+              <div class="tab-field">
+                <label class="tab-label" for="input-line-width">Largura da Linha de Corte</label>
+                <div class="modal-num-wrap">
+                  <input type="number" id="input-line-width" name="cutLineWidth" value="0.25" step="0.05" min="0.01" max="5">
+                  <span class="unit-suffix" data-unit-label>mm</span>
+                </div>
+              </div>
+              <div class="tab-field">
+                <label class="tab-label" for="input-outer-color">Cor da Linha de Corte Externa</label>
+                <div class="color-input-box">
+                  <input type="text" id="input-outer-color" value="#ff0000" maxlength="7" spellcheck="false">
+                  <input type="color" id="picker-outer-color" value="#ff0000" aria-label="Cor da linha externa">
+                </div>
+              </div>
+              <div class="tab-field">
+                <label class="tab-label" for="input-inner-color">Cor da Linha de Corte Interna</label>
+                <div class="color-input-box">
+                  <input type="text" id="input-inner-color" value="#0000ff" maxlength="7" spellcheck="false">
+                  <input type="color" id="picker-inner-color" value="#0000ff" aria-label="Cor da linha interna">
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Tab 3: Compensação de Corte -->
+          <div class="tab-panel" role="tabpanel" data-tab-panel="kerf" hidden>
+            <div class="tab-grid">
+              <div class="tab-field">
+                <span class="tab-label">Tipo de Compensação de Corte</span>
+                <div class="segmented-control" role="group" aria-label="Tipo de compensação de corte">
+                  <button type="button" class="segment-btn active" data-comp="none">NENHUM</button>
+                  <button type="button" class="segment-btn" data-comp="kerf">KERF</button>
+                  <button type="button" class="segment-btn" data-comp="corner">COMPENSAÇÃO DE CANTO</button>
+                </div>
+              </div>
+
+              <div class="tab-field" id="comp-kerf-field" hidden>
+                <label class="tab-label" for="input-kerf">Compensação de Corte (Diâ. Feixe/2)</label>
+                <div class="modal-num-wrap">
+                  <input type="number" id="input-kerf" name="kerf" value="0.10" step="0.01" min="0" max="2">
+                  <span class="unit-suffix" data-unit-label>mm</span>
+                </div>
+              </div>
+
+              <div class="tab-field" id="comp-corner-field" hidden>
+                <label class="tab-label" for="input-bit-diameter">Diâmetro da Broca do Router</label>
+                <div class="modal-num-wrap">
+                  <input type="number" id="input-bit-diameter" name="bitDiameter" value="3.17" step="0.1" min="0.5" max="12">
+                  <span class="unit-suffix" data-unit-label>mm</span>
+                </div>
+                <p class="tab-note" id="corner-flat-note" hidden>No modo Plano, os alívios de canto aplicam-se aos encaixes cruzados das divisórias.</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Tab 4: Layout -->
+          <div class="tab-panel" role="tabpanel" data-tab-panel="layout" hidden>
+            <div class="tab-grid tab-grid-3">
+              <div class="tab-field">
+                <span class="tab-label">Layout do Painel</span>
+                <div class="segmented-control" role="group" aria-label="Layout do painel">
+                  <button type="button" class="segment-btn active" data-layout="separate">SEPARAR</button>
+                  <button type="button" class="segment-btn" data-layout="combine">COMBINAR</button>
+                </div>
+              </div>
+
+              <div class="tab-field" id="panel-spacing-field">
+                <label class="tab-label" for="input-panel-spacing">Espaçamento de Painéis</label>
+                <div class="modal-num-wrap">
+                  <input type="number" id="input-panel-spacing" name="panelSpacing" value="3.00" step="0.5" min="0" max="50">
+                  <span class="unit-suffix" data-unit-label>mm</span>
+                </div>
+              </div>
+
+              <div class="tab-field">
+                <span class="tab-label">Saída de Arquivo</span>
+                <div class="segmented-control" role="group" aria-label="Saída de arquivo">
+                  <button type="button" class="segment-btn active" data-output="single">ARQUIVO ÚNICO</button>
+                  <button type="button" class="segment-btn" data-output="separate">ARQUIVOS SEPARADOS</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Modal Footer -->
+      <div class="modal-footer">
+        <div class="filename-row">
+          <label for="input-filename">Nome do arquivo</label>
+          <input type="text" id="input-filename" value="caixa-divisoria-3x3-150x100x50-3mm" spellcheck="false">
+        </div>
+        <div class="download-actions">
+          <button type="button" class="primary-btn modal-dl-btn" id="btn-download-svg">BAIXAR SVG</button>
+          <button type="button" class="primary-btn modal-dl-btn" id="btn-download-dxf">BAIXAR DXF</button>
+        </div>
+        <p class="modal-caption" id="download-caption">Downloads locais instantâneos em escala real 1:1</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Help Modal -->
+  <div class="modal-backdrop" id="help-modal" role="dialog" aria-modal="true" aria-labelledby="help-modal-title" hidden>
+    <div class="modal-dialog modal-dialog-sm">
+      <div class="modal-header">
+        <h2 id="help-modal-title">Ajuda — Caixa Divisória em Grade</h2>
+        <button type="button" class="modal-close-btn" id="btn-close-help" aria-label="Fechar">✕</button>
+      </div>
+      <div class="help-body">
+        <p>Projete caixas organizadoras com divisórias internas em grade (<strong>Linhas × Colunas</strong>) e exporte os planos de corte em <strong>SVG</strong> e <strong>DXF</strong> na escala real 1:1.</p>
+        <h3>Encaixes das Divisórias</h3>
+        <ul>
+          <li><strong>Encaixe cruzado (Meia-madeira):</strong> Divisórias de linha e coluna se travam a meia altura para ficarem perfeitamente niveladas.</li>
+          <li><strong>Tampa Nenhuma + Dedo:</strong> As divisórias encaixam de cima para baixo em rasgos em U nas paredes externas.</li>
+          <li><strong>Tampa Plana + Dedo:</strong> As paredes externas recebem furos internos (linha azul) onde as abas das divisórias se travam sob a tampa fechada.</li>
+          <li><strong>Redimensionar divisórias:</strong> Permite definir larguras e profundidades individuais para cada compartimento.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script defer src="js/i18n.js"></script>
+  <script defer src="js/geometry.js"></script>
+  <script defer src="js/renderer3d.js"></script>
+  <script defer src="js/exporter.js"></script>
+  <script defer src="js/divider-app.js"></script>
+</body>
+</html>

@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="none">
+  <defs>
+    <linearGradient id="bgGrad" x1="8" y1="6" x2="56" y2="58" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#1e293b"/>
+      <stop offset="100%" stop-color="#0f172a"/>
+    </linearGradient>
+    <linearGradient id="goldTop" x1="16" y1="14" x2="48" y2="30" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#fde68a"/>
+      <stop offset="100%" stop-color="#f4d06f"/>
+    </linearGradient>
+    <linearGradient id="goldLeft" x1="14" y1="24" x2="32" y2="52" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#f4d06f"/>
+      <stop offset="100%" stop-color="#d9a441"/>
+    </linearGradient>
+    <linearGradient id="goldRight" x1="32" y1="28" x2="50" y2="52" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#e5b852"/>
+      <stop offset="100%" stop-color="#b98324"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Rounded precision badge background -->
+  <rect x="2" y="2" width="60" height="60" rx="14" fill="url(#bgGrad)" stroke="#38bdf8" stroke-opacity="0.35" stroke-width="2"/>
+
+  <!-- Isometric CNC Box Left Face -->
+  <path d="M13 24.5L32 34V53L13 43.5V24.5Z" fill="url(#goldLeft)" stroke="#0f172a" stroke-width="1.8" stroke-linejoin="round"/>
+  <!-- Isometric CNC Box Right Face -->
+  <path d="M51 24.5L32 34V53L51 43.5V24.5Z" fill="url(#goldRight)" stroke="#0f172a" stroke-width="1.8" stroke-linejoin="round"/>
+  <!-- Isometric Open Box Top Rim -->
+  <path d="M32 15L51 24.5L32 34L13 24.5L32 15Z" fill="url(#goldTop)" stroke="#0f172a" stroke-width="1.8" stroke-linejoin="round"/>
+  <!-- Interior Cavity -->
+  <path d="M32 19.2L44.5 25.4L32 31.6L19.5 25.4L32 19.2Z" fill="#1e293b" stroke="#0f172a" stroke-width="1.2" stroke-linejoin="round"/>
+  <!-- Finger-joint notch ticks on center seam -->
+  <path d="M29.2 36.8L32 38.2V42.2L29.2 40.8V36.8Z" fill="#b98324" stroke="#0f172a" stroke-width="1.1"/>
+  <path d="M32 42.2L34.8 40.8V44.8L32 46.2V42.2Z" fill="#f4d06f" stroke="#0f172a" stroke-width="1.1"/>
+  <path d="M29.2 44.8L32 46.2V50.2L29.2 48.8V44.8Z" fill="#b98324" stroke="#0f172a" stroke-width="1.1"/>
+
+  <!-- Precision CNC Spindle / Laser Beam Indicator -->
+  <line x1="32" y1="7" x2="32" y2="23.5" stroke="#38bdf8" stroke-width="2.2" stroke-linecap="round"/>
+  <circle cx="32" cy="24.5" r="2.6" fill="#38bdf8"/>
+  <circle cx="32" cy="24.5" r="1.1" fill="#ffffff"/>
+</svg>

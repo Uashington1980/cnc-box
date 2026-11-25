@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CNC Box — Caixa Empilhável para Peças</title>
+  <link rel="icon" type="image/svg+xml" href="assets/logo.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <!-- Top Navigation Bar -->
+  <header class="top-nav">
+    <div class="nav-left">
+      <a href="index.html" class="brand-logo" title="Voltar para a página inicial">
+        <span class="brand-mark" aria-hidden="true">
+          <img src="assets/logo.svg" alt="" width="28" height="28">
+        </span>
+        <span class="brand-wordmark">CNC <span class="brand-accent">Box</span></span>
+      </a>
+      <a href="index.html" class="nav-crumb">← Modelos</a>
+      <span class="brand-badge">Caixa Empilhável · Componentes</span>
+    </div>
+
+    <nav class="nav-right" aria-label="Ações rápidas">
+      <a href="basic-box.html" class="nav-btn nav-link" title="Ir para Caixa Básica">Básica</a>
+      <a href="lid-box.html" class="nav-btn nav-link" title="Ir para Tampa de Caixa">Tampa</a>
+      <a href="divider-box.html" class="nav-btn nav-link" title="Ir para Caixa Divisória">Divisória</a>
+      <a href="polygon-box.html" class="nav-btn nav-link" title="Ir para Caixa Poligonal">Poligonal</a>
+      <a href="kerf-box.html" class="nav-btn nav-link" title="Ir para Caixa Curvada">Curvada</a>
+      <button type="button" class="nav-btn" id="btn-explode" title="Alternar vista explodida 3D">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <polyline points="15 3 21 3 21 9"></polyline>
+          <polyline points="9 21 3 21 3 15"></polyline>
+          <line x1="21" y1="3" x2="14" y2="10"></line>
+          <line x1="3" y1="21" x2="10" y2="14"></line>
+        </svg>
+        <span>Explodir</span>
+      </button>
+      <button type="button" class="nav-btn" id="btn-reset-view" title="Centralizar câmera 3D">
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"></path>
+          <path d="M3 3v5h5"></path>
+        </svg>
+        <span>Centralizar</span>
+      </button>
+      <div class="nav-divider" aria-hidden="true"></div>
+      <button type="button" class="nav-btn nav-btn-outline" id="btn-help">AJUDA</button>
+    </nav>
+  </header>
+
+  <!-- Main Workspace -->
+  <main class="workspace">
+    <!-- Full-bleed 3D WebGL Canvas -->
+    <div class="viewport-container" id="viewport-container">
+      <canvas id="box-canvas" aria-label="Pré-visualização 3D interativa da caixa empilhável para peças"></canvas>
+      <div class="webgl-fallback" id="webgl-fallback" hidden>
+        <p>WebGL não está disponível neste navegador. Os planos 2D em SVG e DXF continuam totalmente funcionais.</p>
+      </div>
+    </div>
+
+    <!-- Floating Left Control Sidebar -->
+    <aside class="control-panel" id="stackable-bin-ui" data-testid="stackable-bin-ui" aria-label="Configurações da Caixa Empilhável para Peças">
+      <div class="panel-header">
+        <h1>Caixa Empilhável para Peças</h1>
+        <button type="button" class="panel-collapse-btn" id="btn-toggle-panel" aria-expanded="true" title="Recolher/Expandir painel">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="18 15 12 9 6 15"></polyline>
+          </svg>
+        </button>
+      </div>
+
+      <div class="panel-body" id="panel-body">
+        <!-- Units Toggle -->
+        <div class="control-group">
+          <div class="segmented-control" role="group" aria-label="Unidades">
+            <button type="button" class="segment-btn" data-unit="in">IN</button>
+            <button type="button" class="segment-btn active" data-unit="mm">MM</button>
+          </div>
+        </div>
+
+        <!-- Dimensions Section -->
+        <section class="control-section">
+          <h2 class="section-label">Dimensões</h2>
+
+          <label class="field-row" for="input-width">
+            <span class="field-name">Largura</span>
+            <span class="field-input-wrap">
+              <input type="number" id="input-width" name="width" value="111.00" step="1" min="40" max="2000" inputmode="decimal">
+              <span class="unit-suffix" data-unit-label>mm</span>
+            </span>
+          </label>
+
+          <label class="field-row" for="input-height">
+            <span class="field-name">Altura</span>
+            <span class="field-input-wrap">
+              <input type="number" id="input-height" name="height" value="83.00" step="1" min="36" max="1000" inputmode="decimal">
+              <span class="unit-suffix" data-unit-label>mm</span>
+            </span>
+          </label>
+
+          <label class="field-row" for="input-depth">
+            <span class="field-name">Profundidade</span>
+            <span class="field-input-wrap">
+              <input type="number" id="input-depth" name="depth" value="111.00" step="1" min="50" max="2000" inputmode="decimal">
+              <span class="unit-suffix" data-unit-label>mm</span>
+            </span>
+          </label>
+
+          <!-- Thickness Preset Dropdown / Custom Input -->
+          <div class="field-row thickness-row">
+            <span class="field-name">Espessura</span>
+            <div class="thickness-control" id="thickness-dropdown-wrap">
+              <details class="custom-select" id="thickness-details">
+                <summary class="custom-select-trigger">
+                  <span id="thickness-display">3.00 mm</span>
+                  <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <polyline points="6 9 12 15 18 9"></polyline>
+                  </svg>
+                </summary>
+                <div class="custom-select-menu" id="thickness-menu" role="listbox"></div>
+              </details>
+            </div>
+            <div class="field-input-wrap thickness-custom-wrap" id="thickness-custom-wrap" hidden>
+              <input type="number" id="input-thickness" name="thickness" value="3.00" step="0.1" min="0.5" max="50" inputmode="decimal">
+              <span class="unit-suffix" data-unit-label>mm</span>
+              <button type="button" class="icon-mini-btn" id="btn-thickness-presets" title="Voltar para predefinições" aria-label="Voltar para predefinições">▾</button>
+            </div>
+          </div>
+
+          <label class="field-row" for="input-lip-height">
+            <span class="field-name">Altura da Borda Frontal</span>
+            <span class="field-input-wrap">
+              <input type="number" id="input-lip-height" name="lipHeight" value="36.00" step="1" min="15" max="800" inputmode="decimal">
+              <span class="unit-suffix" data-unit-label>mm</span>
+            </span>
+          </label>
+
+          <p class="validation-msg" id="validation-msg" role="alert" hidden></p>
+        </section>
+
+        <!-- Dividers Section -->
+        <section class="control-section">
+          <h2 class="section-label">Divisórias</h2>
+
+          <label class="field-row" for="input-rows">
+            <span class="field-name">Linhas</span>
+            <span class="field-input-wrap sides-stepper">
+              <button type="button" class="icon-mini-btn" id="btn-rows-dec" aria-label="Diminuir linhas">−</button>
+              <input type="number" id="input-rows" name="rowCount" value="1" step="1" min="1" max="8" inputmode="numeric">
+              <button type="button" class="icon-mini-btn" id="btn-rows-inc" aria-label="Aumentar linhas">+</button>
+            </span>
+          </label>
+
+          <label class="field-row" for="input-cols">
+            <span class="field-name">Colunas</span>
+            <span class="field-input-wrap sides-stepper">
+              <button type="button" class="icon-mini-btn" id="btn-cols-dec" aria-label="Diminuir colunas">−</button>
+              <input type="number" id="input-cols" name="colCount" value="1" step="1" min="1" max="8" inputmode="numeric">
+              <button type="button" class="icon-mini-btn" id="btn-cols-inc" aria-label="Aumentar colunas">+</button>
+            </span>
+          </label>
+        </section>
+
+        <!-- Batch / Stacking Preview Section -->
+        <section class="control-section">
+          <h2 class="section-label">Lote</h2>
+
+          <label class="field-row" for="input-quantity">
+            <span class="field-name">Quantidade</span>
+            <span class="field-input-wrap sides-stepper">
+              <button type="button" class="icon-mini-btn" id="btn-qty-dec" aria-label="Diminuir quantidade">−</button>
+              <input type="number" id="input-quantity" name="quantity" value="1" step="1" min="1" max="6" inputmode="numeric">
+              <button type="button" class="icon-mini-btn" id="btn-qty-inc" aria-label="Aumentar quantidade">+</button>
+            </span>
+          </label>
+        </section>
+
+        <!-- Inside / Outside Dimensions -->
+        <section class="control-section">
+          <h2 class="section-label">Dimensões internas ou externas?</h2>
+          <div class="segmented-control" role="group" aria-label="Referência das dimensões">
+            <button type="button" class="segment-btn active" data-dim-ref="outside">EXTERNO</button>
+            <button type="button" class="segment-btn" data-dim-ref="inside">INTERNO</button>
+          </div>
+        </section>
+
+        <!-- Primary Action Button -->
+        <button type="button" class="primary-btn" id="btn-open-download" data-testid="download-2d-component">
+          BAIXAR
+        </button>
+      </div>
+    </aside>
+
+    <!-- Bottom-Right Live Info HUD -->
+    <div class="viewport-hud" aria-live="polite">
+      <div class="hud-stats" id="hud-stats">
+        <span><strong>Caixa:</strong> <em id="hud-outer">111.0 × 83.0 × 111.0 mm</em></span>
+        <span class="hud-sep">·</span>
+        <span><strong>Lote:</strong> <em id="hud-batch">1 un. (1×1)</em></span>
+        <span class="hud-sep">·</span>
+        <span><strong>Peças:</strong> <em id="hud-panels">5</em></span>
+      </div>
+      <div class="hud-hint">Arraste para girar · Scroll para zoom</div>
+    </div>
+  </main>
+
+  <!-- Export / Download Modal -->
+  <div class="modal-backdrop" id="download-modal" role="dialog" aria-modal="true" aria-labelledby="download-modal-title" hidden>
+    <div class="modal-dialog">
+      <div class="modal-header">
+        <h2 id="download-modal-title">Baixar</h2>
+        <button type="button" class="modal-close-btn" id="btn-close-download" aria-label="Fechar">✕</button>
+      </div>
+
+      <!-- Live 2D SVG Preview Viewport -->
+      <div class="svg-preview-box" id="svg-preview-box">
+        <div class="svg-preview-inner" id="svg-preview-container"></div>
+        <div class="svg-preview-meta" id="svg-preview-meta"></div>
+      </div>
+
+      <!-- Configuration Tabs -->
+      <div class="modal-tabs-container">
+        <div class="modal-tablist" role="tablist" aria-label="Configurações de exportação">
+          <button type="button" class="tab-btn active" role="tab" aria-selected="true" data-tab="labels">Rótulos</button>
+          <button type="button" class="tab-btn" role="tab" aria-selected="false" data-tab="lines">Formatação de Linha</button>
+          <button type="button" class="tab-btn" role="tab" aria-selected="false" data-tab="kerf">Compensação de Corte</button>
+          <button type="button" class="tab-btn" role="tab" aria-selected="false" data-tab="layout">Layout</button>
+        </div>
+
+        <div class="modal-tab-panels">
+          <!-- Tab 1: Rótulos -->
+          <div class="tab-panel active" role="tabpanel" data-tab-panel="labels">
+            <div class="tab-grid">
+              <div class="tab-field">
+                <span class="tab-label">Rótulos</span>
+                <div class="segmented-control" role="group" aria-label="Rótulos nos painéis">
+                  <button type="button" class="segment-btn active" data-labels="enabled">HABILITADO</button>
+                  <button type="button" class="segment-btn" data-labels="disabled">DESABILITADO</button>
+                </div>
+              </div>
+              <div class="tab-field" id="label-color-field">
+                <label class="tab-label" for="input-label-color">Cor do Rótulo</label>
+                <div class="color-input-box">
+                  <input type="text" id="input-label-color" value="#000000" maxlength="7" spellcheck="false">
+                  <input type="color" id="picker-label-color" value="#000000" aria-label="Selecionar cor do rótulo">
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Tab 2: Formatação de Linha -->
+          <div class="tab-panel" role="tabpanel" data-tab-panel="lines" hidden>
+            <div class="tab-grid tab-grid-3">
+              <div class="tab-field">
+                <label class="tab-label" for="input-line-width">Largura da Linha de Corte</label>
+                <div class="modal-num-wrap">
+                  <input type="number" id="input-line-width" name="cutLineWidth" value="0.25" step="0.05" min="0.01" max="5">
+                  <span class="unit-suffix" data-unit-label>mm</span>
+                </div>
+              </div>
+              <div class="tab-field">
+                <label class="tab-label" for="input-outer-color">Cor da Linha de Corte Externa</label>
+                <div class="color-input-box">
+                  <input type="text" id="input-outer-color" value="#ff0000" maxlength="7" spellcheck="false">
+                  <input type="color" id="picker-outer-color" value="#ff0000" aria-label="Cor da linha externa">
+                </div>
+              </div>
+              <div class="tab-field">
+                <label class="tab-label" for="input-inner-color">Cor da Linha de Corte Interna</label>
+                <div class="color-input-box">
+                  <input type="text" id="input-inner-color" value="#0000ff" maxlength="7" spellcheck="false">
+                  <input type="color" id="picker-inner-color" value="#0000ff" aria-label="Cor da linha interna">
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Tab 3: Compensação de Corte -->
+          <div class="tab-panel" role="tabpanel" data-tab-panel="kerf" hidden>
+            <div class="tab-grid">
+              <div class="tab-field">
+                <span class="tab-label">Tipo de Compensação de Corte</span>
+                <div class="segmented-control" role="group" aria-label="Tipo de compensação de corte">
+                  <button type="button" class="segment-btn active" data-comp="none">NENHUM</button>
+                  <button type="button" class="segment-btn" data-comp="kerf">KERF</button>
+                  <button type="button" class="segment-btn" data-comp="corner">COMPENSAÇÃO DE CANTO</button>
+                </div>
+              </div>
+
+              <div class="tab-field" id="comp-kerf-field" hidden>
+                <label class="tab-label" for="input-kerf">Compensação de Corte (Diâ. Feixe/2)</label>
+                <div class="modal-num-wrap">
+                  <input type="number" id="input-kerf" name="kerf" value="0.10" step="0.01" min="0" max="2">
+                  <span class="unit-suffix" data-unit-label>mm</span>
+                </div>
+              </div>
+
+              <div class="tab-field" id="comp-corner-field" hidden>
+                <label class="tab-label" for="input-bit-diameter">Diâmetro da Broca do Router</label>
+                <div class="modal-num-wrap">
+                  <input type="number" id="input-bit-diameter" name="bitDiameter" value="3.17" step="0.1" min="0.5" max="12">
+                  <span class="unit-suffix" data-unit-label>mm</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Tab 4: Layout -->
+          <div class="tab-panel" role="tabpanel" data-tab-panel="layout" hidden>
+            <div class="tab-grid tab-grid-3">
+              <div class="tab-field">
+                <span class="tab-label">Layout do Painel</span>
+                <div class="segmented-control" role="group" aria-label="Layout do painel">
+                  <button type="button" class="segment-btn active" data-layout="separate">SEPARAR</button>
+                  <button type="button" class="segment-btn" data-layout="combine">COMBINAR</button>
+                </div>
+              </div>
+
+              <div class="tab-field" id="panel-spacing-field">
+                <label class="tab-label" for="input-panel-spacing">Espaçamento de Painéis</label>
+                <div class="modal-num-wrap">
+                  <input type="number" id="input-panel-spacing" name="panelSpacing" value="3.00" step="0.5" min="0" max="50">
+                  <span class="unit-suffix" data-unit-label>mm</span>
+                </div>
+              </div>
+
+              <div class="tab-field">
+                <span class="tab-label">Saída de Arquivo</span>
+                <div class="segmented-control" role="group" aria-label="Saída de arquivo">
+                  <button type="button" class="segment-btn active" data-output="single">ARQUIVO ÚNICO</button>
+                  <button type="button" class="segment-btn" data-output="separate">ARQUIVOS SEPARADOS</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Modal Footer -->
+      <div class="modal-footer">
+        <div class="filename-row">
+          <label for="input-filename">Nome do arquivo</label>
+          <input type="text" id="input-filename" value="caixa-empilhavel-111x111x83-3mm" spellcheck="false">
+        </div>
+        <div class="download-actions">
+          <button type="button" class="primary-btn modal-dl-btn" id="btn-download-svg">BAIXAR SVG</button>
+          <button type="button" class="primary-btn modal-dl-btn" id="btn-download-dxf">BAIXAR DXF</button>
+        </div>
+        <p class="modal-caption" id="download-caption">Downloads locais instantâneos em escala real 1:1</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Help Modal -->
+  <div class="modal-backdrop" id="help-modal" role="dialog" aria-modal="true" aria-labelledby="help-modal-title" hidden>
+    <div class="modal-dialog modal-dialog-sm">
+      <div class="modal-header">
+        <h2 id="help-modal-title">Ajuda — Caixa Empilhável para Peças</h2>
+        <button type="button" class="modal-close-btn" id="btn-close-help" aria-label="Fechar">✕</button>
+      </div>
+      <div class="help-body">
+        <p>Projete caixas organizadoras empilháveis para parafusos, componentes eletrônicos e peças pequenas, com boca frontal inclinada para fácil acesso e exportação em escala real 1:1 (<strong>SVG</strong> e <strong>DXF</strong>).</p>
+        <h3>Recursos Principais</h3>
+        <ul>
+          <li><strong>Travas de empilhamento trapezoidais:</strong> As laterais e a traseira possuem pinos superiores e recortes inferiores correspondentes, além de fundo elevado para empilhar sem folga.</li>
+          <li><strong>Encaixe por furos e espigas:</strong> Os cortes internos em azul recebem as abas da frente inclinada, traseira, fundo e divisórias opcionais.</li>
+          <li><strong>Lote (Quantidade):</strong> Aumente a quantidade para pré-visualizar as caixas empilhadas em 3D e exportar o lote completo na chapa.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script defer src="js/i18n.js"></script>
+  <script defer src="js/geometry.js"></script>
+  <script defer src="js/renderer3d.js"></script>
+  <script defer src="js/exporter.js"></script>
+  <script defer src="js/stackable-app.js"></script>
+</body>
+</html>

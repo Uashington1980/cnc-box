@@ -1,0 +1,408 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>CNC Box — Gerador de Caixas para Corte a Laser e CNC</title>
+  <link rel="icon" type="image/svg+xml" href="assets/logo.svg">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="home-page">
+  <!-- Top Navigation Bar -->
+  <header class="top-nav">
+    <div class="nav-left">
+      <a href="index.html" class="brand-logo" aria-current="page">
+        <span class="brand-mark" aria-hidden="true">
+          <img src="assets/logo.svg" alt="" width="28" height="28">
+        </span>
+        <span class="brand-wordmark">CNC <span class="brand-accent">Box</span></span>
+      </a>
+      <span class="brand-badge">Laser Cut &amp; CNC · Plano &amp; Dedo</span>
+    </div>
+
+    <nav class="nav-right" aria-label="Navegação principal">
+      <a href="basic-box.html" class="nav-btn nav-link">Básica</a>
+      <a href="lid-box.html" class="nav-btn nav-link">Tampa</a>
+      <a href="divider-box.html" class="nav-btn nav-link">Divisória</a>
+      <a href="polygon-box.html" class="nav-btn nav-link">Poligonal</a>
+      <a href="stackable-bin.html" class="nav-btn nav-link">Empilhável</a>
+      <a href="kerf-box.html" class="nav-btn nav-link">Curvada</a>
+      <div class="nav-divider" aria-hidden="true"></div>
+      <button type="button" class="nav-btn nav-btn-outline" id="btn-home-help">AJUDA</button>
+    </nav>
+  </header>
+
+  <!-- Main Home Content -->
+  <main class="home-main">
+    <section class="home-hero">
+      <div class="home-brand-pill">
+        <img src="assets/logo.svg" alt="" width="26" height="26" aria-hidden="true">
+        <span>CNC <strong>Box</strong></span>
+      </div>
+      <h1>Escolha o tipo de caixa para projetar</h1>
+      <p data-i18n-html="home.heroDesc">Crie planos de corte 2D em escala real 1:1 (<strong>SVG</strong> e <strong>DXF</strong>) com visualização 3D interativa, juntas <strong>Plano (FLAT)</strong> e <strong>Dedo (FINGER)</strong>, compensação de <em>Kerf</em> e alívio de canto CNC.</p>
+      <div class="home-lang-bar" id="home-lang-bar" role="group" aria-label="Language"></div>
+    </section>
+
+    <section class="box-grid" aria-label="Modelos de caixas disponíveis">
+      <!-- Card 1: Caixa Básica -->
+      <a href="basic-box.html" class="box-card" data-testid="card-basic-box">
+        <figure class="box-card-figure">
+          <span class="card-tier-badge badge-basic">Básico</span>
+          <!-- Crisp Isometric 3D Basic Finger-Jointed Box Illustration -->
+          <svg class="box-card-art" viewBox="0 0 320 260" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <!-- Back interior walls -->
+            <polygon points="160,52 262,102 262,174 160,124" fill="#d9b252" stroke="#182032" stroke-width="2.2" stroke-linejoin="round"/>
+            <polygon points="160,52 58,102 58,174 160,124" fill="#e6c05e" stroke="#182032" stroke-width="2.2" stroke-linejoin="round"/>
+            <!-- Interior bottom -->
+            <polygon points="160,124 262,174 160,224 58,174" fill="#caa345" stroke="#182032" stroke-width="2" stroke-linejoin="round"/>
+            <!-- Front-left exterior wall -->
+            <polygon points="58,102 160,152 160,224 58,174" fill="#f4d06f" stroke="#182032" stroke-width="2.4" stroke-linejoin="round"/>
+            <!-- Front-right exterior wall -->
+            <polygon points="160,152 262,102 262,174 160,224" fill="#e5be59" stroke="#182032" stroke-width="2.4" stroke-linejoin="round"/>
+            <!-- Top wall thickness rims -->
+            <polygon points="160,52 262,102 254,106 160,60 66,106 58,102" fill="#f8dc88" stroke="#182032" stroke-width="1.8" stroke-linejoin="round"/>
+            <polygon points="58,102 66,98 160,144 254,98 262,102 160,152" fill="#fae299" stroke="#182032" stroke-width="1.8" stroke-linejoin="round"/>
+            <!-- Decorative finger joint details along front corner & bottom edges -->
+            <g fill="#d5ae4d" stroke="#182032" stroke-width="1.5">
+              <!-- Center vertical corner fingers -->
+              <polygon points="153,162 160,165.5 160,180 153,176.5"/>
+              <polygon points="153,192 160,195.5 160,210 153,206.5"/>
+              <polygon points="160,180 167,176.5 167,191 160,194.5"/>
+              <!-- Bottom-left edge fingers -->
+              <polygon points="78,178 96,186.8 96,192.6 78,183.8"/>
+              <polygon points="116,196.6 134,205.4 134,211.2 116,202.4"/>
+              <!-- Bottom-right edge fingers -->
+              <polygon points="184,206.2 202,197.4 202,203.2 184,212"/>
+              <polygon points="222,187.6 240,178.8 240,184.6 222,193.4"/>
+            </g>
+          </svg>
+        </figure>
+        <div class="box-card-body">
+          <div class="box-card-top">
+            <h2>Caixa Básica</h2>
+            <span class="card-arrow" aria-hidden="true">→</span>
+          </div>
+          <p class="box-card-desc">Caixa retangular aberta ou fechada com encaixes retos (Plano) ou dedo (Dedo) totalmente personalizáveis.</p>
+          <div class="card-tags">
+            <span class="card-tag">Laser Cut</span>
+            <span class="card-tag">CNC</span>
+            <span class="card-tag">Plano &amp; Dedo</span>
+          </div>
+        </div>
+      </a>
+
+      <!-- Card 2: Tampa de Caixa -->
+      <a href="lid-box.html" class="box-card" data-testid="card-lid-box">
+        <figure class="box-card-figure">
+          <span class="card-tier-badge badge-lid">Interno</span>
+          <!-- Crisp Isometric 3D Slip-Over Lid floating above dashed box outline -->
+          <svg class="box-card-art" viewBox="0 0 320 260" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <!-- Ghost dashed box base below to communicate slip-over lid -->
+            <g stroke="#1e3a5f" stroke-opacity="0.45" stroke-width="1.8" stroke-dasharray="5 4" stroke-linejoin="round">
+              <polygon points="72,158 160,202 160,236 72,192" fill="rgba(255,255,255,0.12)"/>
+              <polygon points="160,202 248,158 248,192 160,236" fill="rgba(255,255,255,0.08)"/>
+              <polyline points="72,158 160,114 248,158"/>
+            </g>
+            <!-- Downward alignment arrows -->
+            <g stroke="#0f172a" stroke-opacity="0.5" stroke-width="1.8" stroke-linecap="round">
+              <line x1="160" y1="176" x2="160" y2="192"/>
+              <polyline points="155,187 160,193 165,187" fill="none"/>
+            </g>
+
+            <!-- Slip-Over Lid: Top closed cap -->
+            <polygon points="160,52 266,104 160,156 54,104" fill="#fae090" stroke="#182032" stroke-width="2.4" stroke-linejoin="round"/>
+            <!-- Lid Front-Left skirt -->
+            <polygon points="54,104 160,156 160,186 54,134" fill="#f4d06f" stroke="#182032" stroke-width="2.4" stroke-linejoin="round"/>
+            <!-- Lid Front-Right skirt -->
+            <polygon points="160,156 266,104 266,134 160,186" fill="#e5be59" stroke="#182032" stroke-width="2.4" stroke-linejoin="round"/>
+
+            <!-- Finger joint details along top rim & front corner -->
+            <g fill="#d5ae4d" stroke="#182032" stroke-width="1.5">
+              <!-- Top-left edge fingers -->
+              <polygon points="78,116 96,124.8 96,130.6 78,121.8"/>
+              <polygon points="116,134.6 134,143.4 134,149.2 116,140.4"/>
+              <!-- Top-right edge fingers -->
+              <polygon points="184,144.2 202,135.4 202,141.2 184,150"/>
+              <polygon points="222,125.6 240,116.8 240,122.6 222,131.4"/>
+              <!-- Front vertical corner finger -->
+              <polygon points="153,164 160,167.5 160,178 153,174.5"/>
+            </g>
+          </svg>
+        </figure>
+        <div class="box-card-body">
+          <div class="box-card-top">
+            <h2>Tampa de Caixa</h2>
+            <span class="card-arrow" aria-hidden="true">→</span>
+          </div>
+          <p class="box-card-desc">Tampa de encaixe com medidas sempre pelo lado interno (largura, comprimento, altura e espessura).</p>
+          <div class="card-tags">
+            <span class="card-tag">Laser Cut</span>
+            <span class="card-tag">CNC</span>
+            <span class="card-tag">Medidas Internas</span>
+          </div>
+        </div>
+      </a>
+
+      <!-- Card 3: Caixa Divisória em Grade -->
+      <a href="divider-box.html" class="box-card" data-testid="card-divider-box">
+        <figure class="box-card-figure">
+          <span class="card-tier-badge badge-divider">Divisórias</span>
+          <!-- Crisp Isometric 3D 3x3 Grid Divider Box Illustration -->
+          <svg class="box-card-art" viewBox="0 0 320 260" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <!-- Back interior walls -->
+            <polygon points="160,46 270,100 270,170 160,116" fill="#d4ad4d" stroke="#182032" stroke-width="2.2" stroke-linejoin="round"/>
+            <polygon points="160,46 50,100 50,170 160,116" fill="#e2bc5b" stroke="#182032" stroke-width="2.2" stroke-linejoin="round"/>
+            <!-- Interior bottom -->
+            <polygon points="160,116 270,170 160,224 50,170" fill="#c7a043" stroke="#182032" stroke-width="1.8" stroke-linejoin="round"/>
+
+            <!-- Internal Row Dividers (parallel to front-left -> back-right) -->
+            <polygon points="87,82 197,136 197,196 87,142" fill="#e8c362" stroke="#182032" stroke-width="1.8" stroke-linejoin="round"/>
+            <polygon points="123,64 233,118 233,178 123,124" fill="#e8c362" stroke="#182032" stroke-width="1.8" stroke-linejoin="round"/>
+
+            <!-- Internal Column Dividers (parallel to front-right -> back-left) -->
+            <polygon points="197,64 87,118 87,178 197,124" fill="#dfba57" stroke="#182032" stroke-width="1.8" stroke-linejoin="round"/>
+            <polygon points="233,82 123,136 123,196 233,142" fill="#dfba57" stroke="#182032" stroke-width="1.8" stroke-linejoin="round"/>
+
+            <!-- Front-left exterior wall -->
+            <polygon points="50,100 160,154 160,224 50,170" fill="#f4d06f" stroke="#182032" stroke-width="2.4" stroke-linejoin="round"/>
+            <!-- Front-right exterior wall -->
+            <polygon points="160,154 270,100 270,170 160,224" fill="#e5be59" stroke="#182032" stroke-width="2.4" stroke-linejoin="round"/>
+
+            <!-- Crisp Top Edges of Outer Walls + Divider Grid -->
+            <g stroke="#182032" stroke-width="2" stroke-linejoin="round">
+              <!-- Outer rim -->
+              <polygon points="160,46 270,100 263,103.5 160,53 57,103.5 50,100" fill="#fae299"/>
+              <polygon points="50,100 57,96.5 160,147 263,96.5 270,100 160,154" fill="#fae299"/>
+              <!-- Divider top thickness bars (Row dividers) -->
+              <polygon points="84,83.5 90,80.5 200,134.5 194,137.5" fill="#fae299"/>
+              <polygon points="120,65.5 126,62.5 236,116.5 230,119.5" fill="#fae299"/>
+              <!-- Divider top thickness bars (Col dividers) -->
+              <polygon points="194,62.5 200,65.5 90,119.5 84,116.5" fill="#f6d67a"/>
+              <polygon points="230,80.5 236,83.5 126,137.5 120,134.5" fill="#f6d67a"/>
+            </g>
+
+            <!-- Divider drop-in tabs visible on exterior walls + bottom fingers -->
+            <g fill="#d5ae4d" stroke="#182032" stroke-width="1.5">
+              <!-- Column divider tabs on Front-left wall -->
+              <polygon points="84,116.5 90,119.5 90,151 84,148"/>
+              <polygon points="120,134.5 126,137.5 126,169 120,166"/>
+              <!-- Row divider tabs on Front-right wall -->
+              <polygon points="194,137.5 200,134.5 200,166 194,169"/>
+              <polygon points="230,119.5 236,116.5 236,148 230,151"/>
+              <!-- Center corner fingers -->
+              <polygon points="153,166 160,169.5 160,183 153,179.5"/>
+              <polygon points="160,183 167,179.5 167,193 160,196.5"/>
+              <polygon points="153,196 160,199.5 160,213 153,209.5"/>
+            </g>
+          </svg>
+        </figure>
+        <div class="box-card-body">
+          <div class="box-card-top">
+            <h2>Caixa Divisória em Grade</h2>
+            <span class="card-arrow" aria-hidden="true">→</span>
+          </div>
+          <p class="box-card-desc">Organizador com linhas e colunas configuráveis, compartimentos redimensionáveis, opção de tampa e encaixes cruzados.</p>
+          <div class="card-tags">
+            <span class="card-tag">Laser Cut</span>
+            <span class="card-tag">CNC</span>
+            <span class="card-tag">Plano &amp; Dedo</span>
+          </div>
+        </div>
+      </a>
+
+      <!-- Card 3: Caixa Poligonal -->
+      <a href="polygon-box.html" class="box-card" data-testid="card-polygon-box">
+        <figure class="box-card-figure">
+          <span class="card-tier-badge badge-polygon">3–18 Lados</span>
+          <!-- Crisp Isometric 3D Hexagonal Finger-Jointed Box Illustration -->
+          <svg class="box-card-art" viewBox="0 0 320 260" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <!-- Back interior walls of hexagon -->
+            <polygon points="116,58 204,58 204,132 116,132" fill="#cfa748" stroke="#182032" stroke-width="2.1" stroke-linejoin="round"/>
+            <polygon points="64,98 116,58 116,132 64,172" fill="#deba5a" stroke="#182032" stroke-width="2.1" stroke-linejoin="round"/>
+            <polygon points="204,58 256,98 256,172 204,132" fill="#c79f42" stroke="#182032" stroke-width="2.1" stroke-linejoin="round"/>
+            <!-- Interior bottom hexagon -->
+            <polygon points="116,132 204,132 256,172 204,212 116,212 64,172" fill="#be963a" stroke="#182032" stroke-width="1.8" stroke-linejoin="round"/>
+
+            <!-- Front 3 exterior walls of hexagon -->
+            <polygon points="64,98 116,138 116,212 64,172" fill="#f4d06f" stroke="#182032" stroke-width="2.4" stroke-linejoin="round"/>
+            <polygon points="116,138 204,138 204,212 116,212" fill="#ecc45f" stroke="#182032" stroke-width="2.4" stroke-linejoin="round"/>
+            <polygon points="204,138 256,98 256,172 204,212" fill="#dfb650" stroke="#182032" stroke-width="2.4" stroke-linejoin="round"/>
+
+            <!-- Top hexagonal wall thickness rim -->
+            <path d="M116,58 L204,58 L256,98 L204,138 L116,138 L64,98 Z M120,65 L74,98 L120,131 L200,131 L246,98 L200,65 Z" fill="#fae299" fill-rule="evenodd" stroke="#182032" stroke-width="1.9" stroke-linejoin="round"/>
+
+            <!-- Interlocking finger-joint accents on corners & bottom -->
+            <g fill="#d5ae4d" stroke="#182032" stroke-width="1.5">
+              <!-- Front-left corner fingers -->
+              <polygon points="110,148 116,152 116,166 110,162"/>
+              <polygon points="116,166 122,166 122,180 116,180"/>
+              <polygon points="110,180 116,184 116,198 110,194"/>
+              <!-- Front-right corner fingers -->
+              <polygon points="198,148 204,148 204,162 198,162"/>
+              <polygon points="204,162 210,158 210,172 204,176"/>
+              <polygon points="198,176 204,176 204,190 198,190"/>
+              <!-- Front bottom edge fingers -->
+              <polygon points="134,205 152,205 152,212 134,212"/>
+              <polygon points="168,205 186,205 186,212 168,212"/>
+            </g>
+          </svg>
+        </figure>
+        <div class="box-card-body">
+          <div class="box-card-top">
+            <h2>Caixa Poligonal</h2>
+            <span class="card-arrow" aria-hidden="true">→</span>
+          </div>
+          <p class="box-card-desc">Caixa regular de 3 a 18 lados (triângulo, pentágono, hexágono, octógono) com encaixes angulares precisos.</p>
+          <div class="card-tags">
+            <span class="card-tag">Laser Cut</span>
+            <span class="card-tag">CNC</span>
+            <span class="card-tag">Plano &amp; Dedo</span>
+          </div>
+        </div>
+      </a>
+
+      <!-- Card 5: Caixa Empilhável para Peças -->
+      <a href="stackable-bin.html" class="box-card" data-testid="card-stackable-bin">
+        <figure class="box-card-figure">
+          <span class="card-tier-badge badge-bin">Componentes</span>
+          <!-- Crisp Isometric 3D Stackable Parts Bin Illustration -->
+          <svg class="box-card-art" viewBox="0 0 320 260" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <!-- Back interior wall with top trapezoidal stacking lug -->
+            <path d="M62,92 L95,75 L100,67 L119,58 L124,62 L158,45 L158,136 L62,184 Z" fill="#d9b252" stroke="#182032" stroke-width="2.2" stroke-linejoin="round"/>
+            <!-- Right interior wall (sloped down to tilted front) -->
+            <path d="M158,45 L188,60 L195,57 L212,65 L215,73 L228,80 L258,136 L246,178 L158,136 Z" fill="#e5bf5d" stroke="#182032" stroke-width="2.2" stroke-linejoin="round"/>
+            <!-- Recessed interior bottom floor -->
+            <polygon points="158,136 246,178 164,218 76,176" fill="#caa345" stroke="#182032" stroke-width="1.9" stroke-linejoin="round"/>
+            <!-- Tilted front scoop lip -->
+            <polygon points="164,218 246,178 258,136 176,176" fill="#f7da84" stroke="#182032" stroke-width="2.3" stroke-linejoin="round"/>
+            <!-- Left exterior sloped polygonal wall with top trapezoidal lug & bottom notch -->
+            <path d="M62,92 L92,107 L99,104 L116,112 L119,120 L132,127 L176,176 L164,218 L128,200 L122,191 L104,182 L98,185 L62,167 Z" fill="#f4d06f" stroke="#182032" stroke-width="2.4" stroke-linejoin="round"/>
+            <!-- Mortise-and-tenon slot details on left wall -->
+            <g fill="#c99f3f" stroke="#182032" stroke-width="1.4" stroke-linejoin="round">
+              <!-- Rear vertical slots -->
+              <polygon points="70,109 75,111.5 75,127 70,124.5"/>
+              <polygon points="70,137 75,139.5 75,155 70,152.5"/>
+              <!-- Bottom horizontal slots -->
+              <polygon points="76,166 93,174.5 93,179.5 76,171"/>
+              <polygon points="131,193.5 148,202 148,207 131,198.5"/>
+              <!-- Tilted front lip slots -->
+              <polygon points="156,193 162,184 166.5,186.5 160.5,195.5"/>
+              <polygon points="164.5,180 170.5,171 175,173.5 169,182.5"/>
+            </g>
+          </svg>
+        </figure>
+        <div class="box-card-body">
+          <div class="box-card-top">
+            <h2>Caixa Empilhável</h2>
+            <span class="card-arrow" aria-hidden="true">→</span>
+          </div>
+          <p class="box-card-desc">Organizador empilhável para peças e componentes com boca frontal inclinada, divisórias e lote em pilha 3D.</p>
+          <div class="card-tags">
+            <span class="card-tag">Laser Cut</span>
+            <span class="card-tag">CNC</span>
+            <span class="card-tag">Empilhável</span>
+          </div>
+        </div>
+      </a>
+
+      <!-- Card 6: Caixa Curvada -->
+      <a href="kerf-box.html" class="box-card" data-testid="card-kerf-box">
+        <figure class="box-card-figure">
+          <span class="card-tier-badge badge-kerf">Living Hinge</span>
+          <!-- Crisp Isometric 3D Kerf-Bent Rounded Box Illustration -->
+          <svg class="box-card-art" viewBox="0 0 320 260" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <!-- Back interior curved wall -->
+            <path d="M56,102 C56,84 116,52 160,52 C204,52 264,84 264,102 L264,174 C264,192 204,224 160,224 C116,224 56,192 56,174 Z" fill="#d9b252" stroke="#182032" stroke-width="2.2" stroke-linejoin="round"/>
+            <!-- Interior bottom rounded floor -->
+            <path d="M66,172 C66,158 122,126 160,126 C198,126 254,158 254,172 C254,186 198,218 160,218 C122,218 66,186 66,172 Z" fill="#c79f40" stroke="#182032" stroke-width="1.8"/>
+            <!-- Exterior wrap-around curved body -->
+            <path d="M56,102 C56,118 116,152 160,152 C204,152 264,118 264,102 L264,174 C264,192 204,224 160,224 C116,224 56,192 56,174 Z" fill="#f4d06f" stroke="#182032" stroke-width="2.4" stroke-linejoin="round"/>
+            <!-- Top rounded rim thickness -->
+            <path d="M56,102 C56,84 116,52 160,52 C204,52 264,84 264,102 C264,120 204,152 160,152 C116,152 56,120 56,102 Z M66,102 C66,116 122,144 160,144 C198,144 254,116 254,102 C254,88 198,60 160,60 C122,60 66,88 66,102 Z" fill="#fae299" fill-rule="evenodd" stroke="#182032" stroke-width="2" stroke-linejoin="round"/>
+            <!-- Decorative staggered living-hinge kerf slit lines on front curved bend -->
+            <g stroke="#182032" stroke-width="1.3" stroke-linecap="round" opacity="0.82">
+              <line x1="138" y1="154" x2="138" y2="178"/>
+              <line x1="138" y1="190" x2="138" y2="218"/>
+              <line x1="146" y1="164" x2="146" y2="206"/>
+              <line x1="154" y1="155" x2="154" y2="180"/>
+              <line x1="154" y1="192" x2="154" y2="221"/>
+              <line x1="162" y1="165" x2="162" y2="208"/>
+              <line x1="170" y1="155" x2="170" y2="180"/>
+              <line x1="170" y1="192" x2="170" y2="221"/>
+              <line x1="178" y1="164" x2="178" y2="206"/>
+              <line x1="186" y1="154" x2="186" y2="178"/>
+              <line x1="186" y1="190" x2="186" y2="218"/>
+            </g>
+          </svg>
+        </figure>
+        <div class="box-card-body">
+          <div class="box-card-top">
+            <h2>Caixa Curvada</h2>
+            <span class="card-arrow" aria-hidden="true">→</span>
+          </div>
+          <p class="box-card-desc">Cantos arredondados dobráveis a laser (1, 2 ou 4 dobras), modo aberta, fechada ou com tampa curva sob medida.</p>
+          <div class="card-tags">
+            <span class="card-tag">Laser Cut</span>
+            <span class="card-tag">Dobras Kerf</span>
+            <span class="card-tag">Com Tampa</span>
+          </div>
+        </div>
+      </a>
+    </section>
+
+    <section class="home-highlights" aria-label="Recursos inclusos">
+      <div class="highlight-item">
+        <strong>Pré-visualização 3D WebGL</strong>
+        <span>Gire em 360°, dê zoom e use a vista explodida para conferir cada encaixe antes de cortar.</span>
+      </div>
+      <div class="highlight-item">
+        <strong>Exportação SVG &amp; DXF 1:1</strong>
+        <span>Arquivos prontos para LightBurn, RDWorks, Inkscape, AutoCAD, Fusion 360 e VCarve.</span>
+      </div>
+      <div class="highlight-item">
+        <strong>Kerf &amp; Dogbone CNC</strong>
+        <span>Compensação de feixe laser e alívio automático de cantos internos para fresas cilíndricas.</span>
+      </div>
+    </section>
+  </main>
+
+  <!-- Help Modal -->
+  <div class="modal-backdrop" id="home-help-modal" role="dialog" aria-modal="true" aria-labelledby="home-help-title" hidden>
+    <div class="modal-dialog modal-dialog-sm">
+      <div class="modal-header">
+        <h2 id="home-help-title">Sobre o CNC Box</h2>
+        <button type="button" class="modal-close-btn" id="btn-close-home-help" aria-label="Fechar">✕</button>
+      </div>
+      <div class="help-body">
+        <p>Aplicação 100% local em HTML, CSS e JavaScript para gerar planos de corte de caixas para cortadoras a laser e fresadoras CNC.</p>
+        <h3>Modelos Disponíveis</h3>
+        <ul>
+          <li><strong>Caixa Básica:</strong> Caixa aberta ou fechada com juntas <em>Plano (FLAT)</em> ou <em>Dedo (FINGER)</em>.</li>
+          <li><strong>Tampa de Caixa:</strong> Tampa de encaixe (fechada no topo e aberta na base) dimensionada sempre pelo lado interno para vestir perfeitamente sobre a caixa.</li>
+          <li><strong>Caixa Divisória em Grade:</strong> Caixa com grade interna de <em>Linhas × Colunas</em>, divisórias com encaixes cruzados (meia-madeira), redimensionamento individual de compartimentos, modo de dimensões por célula e opção de tampa plana.</li>
+          <li><strong>Caixa Poligonal:</strong> Caixa regular de 3 a 18 lados configurável por diâmetro interno, externo ou comprimento do lado, com juntas angulares <em>Plano</em> e <em>Dedo</em>.</li>
+          <li><strong>Caixa Empilhável para Peças:</strong> Gaveteiro empilhável para componentes com boca frontal inclinada, travas trapezoidais de empilhamento, divisórias opcionais e lote múltiplo.</li>
+          <li><strong>Caixa Curvada:</strong> Caixa com dobras flexíveis a laser (<em>living hinge</em>) de 1, 2 ou 4 cantos arredondados, nas opções <em>Aberta</em>, <em>Fechada</em> ou <em>Com Tampa Curva</em> sob medida.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <script defer src="js/i18n.js"></script>
+  <script>
+    (function () {
+      const btn = document.getElementById('btn-home-help');
+      const modal = document.getElementById('home-help-modal');
+      const closeBtn = document.getElementById('btn-close-home-help');
+      btn.addEventListener('click', () => { modal.hidden = false; });
+      closeBtn.addEventListener('click', () => { modal.hidden = true; });
+      modal.addEventListener('click', e => { if (e.target === modal) modal.hidden = true; });
+      document.addEventListener('keydown', e => { if (e.key === 'Escape') modal.hidden = true; });
+    })();
+  </script>
+</body>
+</html>
