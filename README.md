@@ -1,6 +1,6 @@
 # CNC Box — Laser Cut & CNC Box Generator
 
-**Live Demo:** [https://uashington1980.github.io/cnc-box/](https://uashington1980.github.io/cnc-box/)
+**Live Demo:** [https://uashington1980.github.io/CNC-Box/](https://uashington1980.github.io/CNC-Box/)
 
 **CNC Box** is a 100% client-side **HTML + CSS + Vanilla JavaScript** parametric box generator for laser cutters and CNC routers — zero external build steps, zero frameworks, interactive **WebGL 3D** preview, and true **1:1 scale SVG, AutoCAD R12 DXF, and ZIP** export.
 
@@ -25,7 +25,7 @@
 
 ## Live Site & Running Locally
 
-Access the hosted web app directly at **[https://uashington1980.github.io/cnc-box/](https://uashington1980.github.io/cnc-box/)**.
+Access the hosted web app directly at **[https://uashington1980.github.io/CNC-Box/](https://uashington1980.github.io/CNC-Box/)**.
 
 To run locally, open `index.html` directly in any modern browser, or serve statically:
 
